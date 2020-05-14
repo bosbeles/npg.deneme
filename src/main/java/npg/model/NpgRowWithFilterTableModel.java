@@ -5,6 +5,8 @@ import java.util.List;
 
 public class NpgRowWithFilterTableModel extends NpgRowTableModel {
 
+    private boolean editable = true;
+
     public NpgRowWithFilterTableModel() {
         super(new ArrayList<>());
     }
@@ -36,7 +38,11 @@ public class NpgRowWithFilterTableModel extends NpgRowTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex > 1;
+        return editable && columnIndex > 1;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
     }
 
 

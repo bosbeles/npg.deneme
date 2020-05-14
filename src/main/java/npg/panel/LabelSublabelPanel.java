@@ -17,6 +17,8 @@ public class LabelSublabelPanel extends JPanel {
     private JTable table;
     private GlasspaneWrapper wrapper;
     private JPanel backPanel;
+    private JPanel bulkOpPanel;
+    private LabelSublabelTableModel tableModel;
 
     public LabelSublabelPanel() {
         initialize();
@@ -68,7 +70,7 @@ public class LabelSublabelPanel extends JPanel {
         ((JComponent) table.getDefaultRenderer(Boolean.class)).setOpaque(true);
         table.setFillsViewportHeight(true);
         List<MessageRow> rowList = new ArrayList<>();
-        LabelSublabelTableModel tableModel = new LabelSublabelTableModel(rowList);
+        tableModel = new LabelSublabelTableModel(rowList);
         table.setModel(tableModel);
 
         labelSublabelScroll.setViewportView(table);
@@ -96,7 +98,7 @@ public class LabelSublabelPanel extends JPanel {
         JCheckBox chckbxForceTellIndicator = new JCheckBox("Force Tell Indicator");
         filterOverridenPanel.add(chckbxForceTellIndicator);
 
-        JPanel bulkOpPanel = new JPanel();
+        bulkOpPanel = new JPanel();
         GridBagConstraints gbc_panel_3 = new GridBagConstraints();
         gbc_panel_3.anchor = GridBagConstraints.EAST;
         gbc_panel_3.fill = GridBagConstraints.VERTICAL;
@@ -131,14 +133,11 @@ public class LabelSublabelPanel extends JPanel {
 
 
     public void activate(boolean activate){
-
-        if(activate) {
-            wrapper.activateGlassPane(false);
-        }
-        else {
-            wrapper.activateGlassPane(true);
-        }
+        GUIUtil.enableComponents(bulkOpPanel, activate);
+        tableModel.setEditable(activate);
     }
+
+
 
     public void setAllTo(boolean flag) {
         LabelSublabelTableModel tableModel = (LabelSublabelTableModel) table.getModel();

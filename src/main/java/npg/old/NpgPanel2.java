@@ -92,7 +92,7 @@ public class NpgPanel2 extends JPanel implements PanelListener {
 
         npgCombobox.setWide(true);
 
-        JButton allowBtn = new JButton("�zin Ver");
+        JButton allowBtn = new JButton("İzin Ver");
         JButton filterBtn = new JButton("Filtrele");
 
         npgPanel.add(new JLabel("Mesaj Grubu"));

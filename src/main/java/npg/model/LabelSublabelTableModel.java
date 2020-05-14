@@ -23,9 +23,14 @@ public class LabelSublabelTableModel extends DefaultTableModel {
         }
 
     };
+    private boolean editable = true;
 
     public LabelSublabelTableModel(List<MessageRow> rowList) {
         setDataOnly(rowList);
+    }
+
+    public void setEditable(boolean flag) {
+        this.editable = flag;
     }
 
     public void setData(List<MessageRow> rowList) {
@@ -48,7 +53,7 @@ public class LabelSublabelTableModel extends DefaultTableModel {
 
     @Override
     public boolean isCellEditable(int row, int column) {
-        return column == 2;
+        return editable &&  column == 2;
     }
 
     @Override

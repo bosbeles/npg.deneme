@@ -5,6 +5,7 @@ import npg.test.GUITester;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -173,10 +174,20 @@ public class NpgPanel3 extends JPanel {
             }
         });
 
-        npgViewButton.addItemListener( e-> {
+        ItemListener itemListener = e -> {
             boolean flag = npgViewButton.isSelected();
             labelSublabelPanel.activate(!flag);
-        });
+
+            GUIUtil.enableComponents(panel, flag);
+            GUIUtil.enableComponents(buttonPanel, flag);
+            selectedNpgTableModel.setEditable(flag);
+            selectedNpgTable.setEnabled(flag);
+            npgTable.setEnabled(flag);
+
+        };
+        npgViewButton.setSelected(true);
+        itemListener.itemStateChanged(null);
+        npgViewButton.addItemListener(itemListener);
     }
 
     private void order(boolean up) {
@@ -246,70 +257,6 @@ public class NpgPanel3 extends JPanel {
 
     public static void main(String[] args) {
         GUITester.test(() -> new NpgPanel3());
-    }
-
-
-    /**
-     * Shifts the selected items of an array one unit to front or back. <br>
-     * array=[1,2,3,4,5,6] <br>
-     * (array, {1,2,4}, true) -> returns: true, array=[2,3,1,5,4,6] <br><br>
-     * array=[1,2,3,4,5,6] <br>
-     * (array, {0,1,3}, true) -> returns: true, array=[1,2,4,3,5,6] <br><br>
-     * array=[1,2,3,4,5,6] <br>
-     * (array, {0,1,2}, true) -> returns: false, array=[1,2,3,4,5,6] <br><br>
-     *
-     * @param array   the array
-     * @param indices selected indices
-     * @param front   move to front or back.
-     * @param <T>     the item type
-     * @return true if array has changed, false otherwise.
-     */
-    public static <T> boolean shiftTo(T[] array, int[] indices, boolean front) {
-
-        return false;
-    }
-
-    /**
-     * Shifts the selected items of an array <code>n</code> unit to front or back. <br>
-     * array=[1,2,3,4,5,6] <br>
-     * (array, {1,2,4}, true, 3) -> returns: 2, array=[2,3,5,1,4,6] <br><br>
-     *
-     * @param array   the array
-     * @param indices selected indices
-     * @param front   move to front or back.
-     * @param n       number of shifts
-     * @param <T>     the item type
-     * @return number of successful shifts.
-     */
-    public static <T> int shiftTo(T[] array, int[] indices, boolean front, int n) {
-
-        return 0;
-    }
-
-    private static <T> int shiftTo(T[] array, int index, int n) {
-        int ret = Math.abs(n);
-        if (n < 0) {
-            int newIndex = index + n;
-            if (newIndex < 0) {
-                ret += newIndex;
-                newIndex = 0;
-            }
-            T temp = array[newIndex];
-            array[newIndex] = array[index];
-            array[index] = temp;
-
-        } else if (n > 0) {
-            int newIndex = index + n;
-            if (newIndex > array.length - 1) {
-                ret += array.length - 1 - newIndex;
-                newIndex = array.length - 1;
-            }
-            T temp = array[newIndex];
-            array[newIndex] = array[index];
-            array[index] = temp;
-
-        }
-        return ret;
     }
 
 
