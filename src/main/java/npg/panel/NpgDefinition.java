@@ -4,7 +4,10 @@ import npg.model.*;
 import npg.test.GUITester;
 
 import javax.swing.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class NpgDefinition extends JPanel {
@@ -36,6 +39,10 @@ public class NpgDefinition extends JPanel {
 
     }
 
+    public static void main(String[] args) {
+        GUITester.test(() -> new NpgDefinition());
+    }
+
     private void initiliazeMesssageRows() {
         messageRowList = new ArrayList<>();
         String[][] arr = {{"J2.0", "7 6"}, {"J2.2", "6"}, {"J2.3", "6"}, {"J2.4", "6"}, {"J2.5", "6"},
@@ -55,7 +62,6 @@ public class NpgDefinition extends JPanel {
 
     }
 
-
     protected void onDefinitionChanged() {
         for (NpgDefinitionListener npgDefinitionListener : definitionListeners) {
             npgDefinitionListener.definitionChanged();
@@ -70,7 +76,7 @@ public class NpgDefinition extends JPanel {
         Map<String, NpgRow> npgRowMap = new HashMap<>();
         messageRowList.forEach(messageRow -> {
             messageRow.getNpgList().forEach(npgString -> {
-                npgRowMap.computeIfAbsent(npgString, k-> new NpgRow(k)).getMessageList().add(messageRow.getRow());
+                npgRowMap.computeIfAbsent(npgString, k -> new NpgRow(k)).getMessageList().add(messageRow.getRow());
             });
         });
         List<NpgRow> npgRows = new ArrayList<>(npgRowMap.values());
@@ -84,10 +90,6 @@ public class NpgDefinition extends JPanel {
 
     public static interface NpgDefinitionListener {
         void definitionChanged();
-    }
-
-    public static void main(String[] args) {
-        GUITester.test(() -> new NpgDefinition());
     }
 
 

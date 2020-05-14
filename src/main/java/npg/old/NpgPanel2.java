@@ -256,6 +256,11 @@ public class NpgPanel2 extends JPanel implements PanelListener {
 
     }
 
+    public static void main(String[] args) {
+        GUITester.test(() -> new NpgPanel2(new NpgDefinition()), args.length > 0 ? args[0] : "Nimbus");
+
+    }
+
     private void updateCombobox() {
         Map<String, List<Integer>> npgMap = npgDefPanel.getNpgMap();
         Map<Integer, List<String>> npgMessageMap = npgDefPanel.getNpgMessageMap();
@@ -331,11 +336,6 @@ public class NpgPanel2 extends JPanel implements PanelListener {
 
     private void transferAll(JList<Integer> from, JList<Integer> to) {
         transfer(((SortedListModel) from.getModel()).getAll(), from, to);
-    }
-
-    public static void main(String[] args) {
-        GUITester.test(() -> new NpgPanel2(new NpgDefinition()), args.length > 0 ? args[0] : "Nimbus");
-
     }
 
 }

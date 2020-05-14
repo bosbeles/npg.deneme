@@ -1,13 +1,7 @@
 package npg.old;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
+import java.awt.*;
 
 public class WiderDropDownCombo<T> extends JComboBox<T> {
 
@@ -19,9 +13,30 @@ public class WiderDropDownCombo<T> extends JComboBox<T> {
     public WiderDropDownCombo() {
         super();
     }
-    
+
     public WiderDropDownCombo(T[] objs) {
         super(objs);
+    }
+
+    public static void main(String[] args) {
+        String title = "Combo Test";
+        JFrame frame = new JFrame(title);
+
+        String[] items = {
+                "I need lot of width to be visible , oh am I visible now",
+                "I need lot of width to be visible , oh am I visible now"};
+        WiderDropDownCombo simpleCombo = new WiderDropDownCombo(items);
+        simpleCombo.setPreferredSize(new Dimension(180, 20));
+        simpleCombo.setWide(true);
+        JLabel label = new JLabel("Wider Drop Down Demo");
+
+        frame.getContentPane().add(simpleCombo, BorderLayout.NORTH);
+        frame.getContentPane().add(label, BorderLayout.SOUTH);
+        int width = 200;
+        int height = 150;
+        frame.setSize(width, height);
+        frame.setVisible(true);
+
     }
 
     public boolean isWide() {
@@ -72,26 +87,5 @@ public class WiderDropDownCombo<T> extends JComboBox<T> {
 
     public void setType(String t) {
         type = t;
-    }
-
-    public static void main(String[] args) {
-        String title = "Combo Test";
-        JFrame frame = new JFrame(title);
-
-        String[] items = {
-                "I need lot of width to be visible , oh am I visible now",
-                "I need lot of width to be visible , oh am I visible now" };
-        WiderDropDownCombo simpleCombo = new WiderDropDownCombo(items);
-        simpleCombo.setPreferredSize(new Dimension(180, 20));
-        simpleCombo.setWide(true);
-        JLabel label = new JLabel("Wider Drop Down Demo");
-
-        frame.getContentPane().add(simpleCombo, BorderLayout.NORTH);
-        frame.getContentPane().add(label, BorderLayout.SOUTH);
-        int width = 200;
-        int height = 150;
-        frame.setSize(width, height);
-        frame.setVisible(true);
-
     }
 }

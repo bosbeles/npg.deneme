@@ -53,7 +53,7 @@ public class LabelSublabelTableModel extends DefaultTableModel {
 
     @Override
     public boolean isCellEditable(int row, int column) {
-        return editable &&  column == 2;
+        return editable && column == 2;
     }
 
     @Override

@@ -467,6 +467,11 @@ public class NpgPanel extends JPanel implements PanelListener {
 
     }
 
+    public static void main(String[] args) {
+        GUITester.test(() -> new NpgPanel(), args.length > 0 ? args[0] : "Nimbus");
+
+    }
+
     @Override
     public void updateNpgColumn() {
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
@@ -527,11 +532,6 @@ public class NpgPanel extends JPanel implements PanelListener {
 
     private void transferAll(JList<Integer> from, JList<Integer> to) {
         transfer(((SortedListModel) from.getModel()).getAll(), from, to);
-    }
-
-    public static void main(String[] args) {
-        GUITester.test(() -> new NpgPanel(), args.length > 0 ? args[0] : "Nimbus");
-
     }
 
 }

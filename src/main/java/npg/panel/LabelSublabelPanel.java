@@ -45,10 +45,10 @@ public class LabelSublabelPanel extends JPanel {
         gbc_panel_1.gridy = 1;
 
         GridBagLayout gbl_panel_1 = new GridBagLayout();
-        gbl_panel_1.columnWidths = new int[] { 400, 200, 0 };
-        gbl_panel_1.rowHeights = new int[] { 200, 0 };
-        gbl_panel_1.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
-        gbl_panel_1.rowWeights = new double[] { 1.0, 0.0 };
+        gbl_panel_1.columnWidths = new int[]{400, 200, 0};
+        gbl_panel_1.rowHeights = new int[]{200, 0};
+        gbl_panel_1.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+        gbl_panel_1.rowWeights = new double[]{1.0, 0.0};
 
         backPanel.setLayout(gbl_panel_1);
 
@@ -131,12 +131,10 @@ public class LabelSublabelPanel extends JPanel {
     }
 
 
-
-    public void activate(boolean activate){
+    public void activate(boolean activate) {
         GUIUtil.enableComponents(bulkOpPanel, activate);
         tableModel.setEditable(activate);
     }
-
 
 
     public void setAllTo(boolean flag) {

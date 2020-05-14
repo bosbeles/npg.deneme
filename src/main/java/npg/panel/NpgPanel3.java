@@ -8,13 +8,12 @@ import java.awt.*;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 public class NpgPanel3 extends JPanel {
+    private final NpgDefinition definitionPanel;
     private JTable npgTable;
     private JTable selectedNpgTable;
-    private final NpgDefinition definitionPanel;
 
     /**
      * Create the panel.
@@ -150,7 +149,7 @@ public class NpgPanel3 extends JPanel {
                 int labelRowCount = labelSublabelModel.getRowCount();
                 for (int j = 0; j < labelRowCount; j++) {
                     Object label = labelSublabelModel.getValueAt(j, 0);
-                    if(messageList.contains(label)) {
+                    if (messageList.contains(label)) {
                         labelSublabelModel.setValueAt(row.isFiltered(), j, 2);
                     }
                 }
@@ -188,6 +187,10 @@ public class NpgPanel3 extends JPanel {
         npgViewButton.setSelected(true);
         itemListener.itemStateChanged(null);
         npgViewButton.addItemListener(itemListener);
+    }
+
+    public static void main(String[] args) {
+        GUITester.test(() -> new NpgPanel3());
     }
 
     private void order(boolean up) {
@@ -253,10 +256,6 @@ public class NpgPanel3 extends JPanel {
 
     private ImageIcon getIcon(String path) {
         return new ImageIcon(getClass().getClassLoader().getResource(path));
-    }
-
-    public static void main(String[] args) {
-        GUITester.test(() -> new NpgPanel3());
     }
 
 

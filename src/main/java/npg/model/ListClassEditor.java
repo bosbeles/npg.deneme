@@ -12,7 +12,7 @@ public class ListClassEditor extends DefaultCellEditor {
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-        if(value instanceof java.util.List) {
+        if (value instanceof java.util.List) {
             java.util.List<Object> list = (List) value;
 
             String representation = list.stream().map(e -> e.toString()).collect(Collectors.joining(" "));

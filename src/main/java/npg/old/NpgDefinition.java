@@ -57,6 +57,11 @@ public class NpgDefinition extends JPanel {
 
     }
 
+    public static void main(String[] args) {
+        GUITester.test(() -> new NpgDefinition());
+
+    }
+
     public void addPanelListener(PanelListener panel) {
         panelListeners.add(panel);
     }
@@ -118,11 +123,6 @@ public class NpgDefinition extends JPanel {
         map.forEach((k, v) -> map2.put(k, v.stream().distinct().collect(Collectors.toList())));
 
         return map2;
-    }
-
-    public static void main(String[] args) {
-        GUITester.test(() -> new NpgDefinition());
-
     }
 
 
