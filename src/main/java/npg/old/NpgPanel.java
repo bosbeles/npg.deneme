@@ -32,7 +32,6 @@ public class NpgPanel extends JPanel implements PanelListener {
         npgDefPanel.addPanelListener(this);
 
 
-
         JPanel npgPanel1 = new JPanel();
 
 
@@ -476,7 +475,10 @@ public class NpgPanel extends JPanel implements PanelListener {
 
     }
 
+    public static void main(String[] args) {
+        GUITester.test(() -> new NpgPanel(), args.length > 0 ? args[0] : "Nimbus");
 
+    }
 
     @Override
     public void updateNpgColumn() {
@@ -538,11 +540,6 @@ public class NpgPanel extends JPanel implements PanelListener {
 
     private void transferAll(JList<Integer> from, JList<Integer> to) {
         transfer(((SortedListModel) from.getModel()).getAll(), from, to);
-    }
-
-    public static void main(String[] args) {
-        GUITester.test(() -> new NpgPanel(), args.length > 0 ? args[0] : "Nimbus");
-
     }
 
 }

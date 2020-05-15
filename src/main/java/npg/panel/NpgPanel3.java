@@ -1,7 +1,6 @@
 package npg.panel;
 
 import npg.model.*;
-import npg.old.NpgPanel;
 import npg.test.GUITester;
 
 import javax.swing.*;
@@ -13,7 +12,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static npg.panel.GUIUtil.*;
+import static npg.panel.GUIUtil.enableComponents;
+import static npg.panel.GUIUtil.getIcon;
 
 public class NpgPanel3 extends JPanel implements NpgDefinition.NpgDefinitionListener {
     private final NpgDefinition definitionPanel;
@@ -72,7 +72,6 @@ public class NpgPanel3 extends JPanel implements NpgDefinition.NpgDefinitionList
         JPanel messageGroupPanel = new JPanel(messageGroupPanelLayout);
         messageGroupPanel.setPreferredSize(new Dimension(700, 300));
         messageGroupPanel.setBorder(new TitledBorder("Mesaj Grubuna Göre Filtreleme"));
-
 
 
         GridBagConstraints gbc_messageGroupPanel = new GridBagConstraints();
@@ -235,7 +234,7 @@ public class NpgPanel3 extends JPanel implements NpgDefinition.NpgDefinitionList
             npgTable.setEnabled(flag);
 
             messageGroupPanel.setEnabled(flag);
-            if(flag) {
+            if (flag) {
                 selectedNpgTableModelListener.tableChanged(null);
             }
 
@@ -311,7 +310,6 @@ public class NpgPanel3 extends JPanel implements NpgDefinition.NpgDefinitionList
         }
     }
 
-
     @Override
     public void definitionChanged() {
         List<MessageRow> messageRowList = definitionPanel.getMessageRowList();
@@ -319,4 +317,5 @@ public class NpgPanel3 extends JPanel implements NpgDefinition.NpgDefinitionList
         npgTable.setModel(new NpgRowTableModel(definitionPanel.getNpgRowList()));
         selectedNpgTableModel.setData(new ArrayList<>());
     }
+
 }

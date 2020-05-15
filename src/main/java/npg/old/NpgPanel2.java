@@ -10,27 +10,18 @@ import npg.panel.NpgDefinition;
 import npg.test.GUITester;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
+import java.util.Comparator;
 import java.util.List;
-import java.util.*;
-import java.util.logging.Filter;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class NpgPanel2 extends JPanel implements npg.panel.NpgDefinition.NpgDefinitionListener {
-    private JTable table;
-
-    private NpgDefinition npgDefPanel;
-
-    private JDialog dialog;
-
-    private Comparator<String> comp;
-
-    private WiderDropDownCombo<NpgRow> npgCombobox;
     private final LabelSublabelPanel panel_1;
+    private JTable table;
+    private NpgDefinition npgDefPanel;
+    private JDialog dialog;
+    private Comparator<String> comp;
+    private WiderDropDownCombo<NpgRow> npgCombobox;
 
     /**
      * Create the panel.
@@ -58,7 +49,6 @@ public class NpgPanel2 extends JPanel implements npg.panel.NpgDefinition.NpgDefi
         gbc_panel_2.gridy = 0;
         gbc_panel_2.weightx = 1.0;
         add(panel_2, gbc_panel_2);
-
 
 
         JPanel npgPanel = new JPanel();
@@ -100,7 +90,6 @@ public class NpgPanel2 extends JPanel implements npg.panel.NpgDefinition.NpgDefi
         gbc_panel_1.gridx = 0;
         gbc_panel_1.gridy = 2;
         add(panel_1, gbc_panel_1);
-
 
 
         allowBtn.addActionListener(e -> {
@@ -163,7 +152,10 @@ public class NpgPanel2 extends JPanel implements npg.panel.NpgDefinition.NpgDefi
 
     }
 
+    public static void main(String[] args) {
+        GUITester.test(() -> new NpgPanel2(new NpgDefinition()), args.length > 0 ? args[0] : "Nimbus");
 
+    }
 
     private void updateCombobox() {
 
@@ -184,8 +176,6 @@ public class NpgPanel2 extends JPanel implements npg.panel.NpgDefinition.NpgDefi
         */
         npgCombobox.setModel(new DefaultComboBoxModel<NpgRow>(npgRowList.toArray(new NpgRow[]{})));
     }
-
-
 
     @Override
     public void definitionChanged() {
@@ -241,11 +231,6 @@ public class NpgPanel2 extends JPanel implements npg.panel.NpgDefinition.NpgDefi
 
     private void transferAll(JList<Integer> from, JList<Integer> to) {
         transfer(((SortedListModel) from.getModel()).getAll(), from, to);
-    }
-
-    public static void main(String[] args) {
-        GUITester.test(() -> new NpgPanel2(new NpgDefinition()), args.length > 0 ? args[0] : "Nimbus");
-
     }
 
 }

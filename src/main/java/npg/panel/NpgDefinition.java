@@ -77,8 +77,8 @@ public class NpgDefinition extends JPanel {
     public List<NpgRow> getNpgRowList() {
         Map<String, NpgRow> npgRowMap = new HashMap<>();
         messageRowList.forEach(messageRow -> {
-            if(messageRow.getNpgList().isEmpty()) {
-                npgRowMap.computeIfAbsent("", k-> new NpgRow(k)).getMessageList().add(messageRow.getRow());
+            if (messageRow.getNpgList().isEmpty()) {
+                npgRowMap.computeIfAbsent("", k -> new NpgRow(k)).getMessageList().add(messageRow.getRow());
             }
             messageRow.getNpgList().forEach(npgString -> {
                 npgRowMap.computeIfAbsent(npgString, k -> new NpgRow(k)).getMessageList().add(messageRow.getRow());

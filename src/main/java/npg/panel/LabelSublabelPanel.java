@@ -70,7 +70,7 @@ public class LabelSublabelPanel extends JPanel {
         gbc_wrapper.weightx = 1.0;
         gbc_wrapper.weighty = 1.0;
         gbc_wrapper.fill = GridBagConstraints.BOTH;
-        gbc_wrapper.insets = new Insets(5,5,5,5);
+        gbc_wrapper.insets = new Insets(5, 5, 5, 5);
         scrollpaneWrapperPanel.add(labelSublabelScroll, gbc_wrapper);
         labelSublabelScrollPanel.add(scrollpaneWrapperPanel);
         backPanel.add(labelSublabelScrollPanel, gbc_scrollPane_3);
