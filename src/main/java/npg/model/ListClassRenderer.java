@@ -1,12 +1,14 @@
 package npg.model;
 
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ListClassRenderer extends DefaultTableCellRenderer {
+public class ListClassRenderer extends SubstanceDefaultTableCellRenderer {
 
 
     public ListClassRenderer() {

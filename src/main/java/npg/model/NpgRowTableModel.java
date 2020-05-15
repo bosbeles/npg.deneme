@@ -11,6 +11,11 @@ public class NpgRowTableModel extends AbstractTableModel {
         this.npgRowList = npgRowList;
     }
 
+    public void setData(List<NpgRow> npgRowList) {
+        this.npgRowList = npgRowList;
+        fireTableDataChanged();
+    }
+
     @Override
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {

@@ -4,6 +4,7 @@ import npg.model.*;
 import npg.test.GUITester;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ public class NpgDefinition extends JPanel {
 
     public NpgDefinition() {
 
+        setLayout(new BorderLayout());
         initiliazeMesssageRows();
 
 
@@ -75,6 +77,9 @@ public class NpgDefinition extends JPanel {
     public List<NpgRow> getNpgRowList() {
         Map<String, NpgRow> npgRowMap = new HashMap<>();
         messageRowList.forEach(messageRow -> {
+            if(messageRow.getNpgList().isEmpty()) {
+                npgRowMap.computeIfAbsent("", k-> new NpgRow(k)).getMessageList().add(messageRow.getRow());
+            }
             messageRow.getNpgList().forEach(npgString -> {
                 npgRowMap.computeIfAbsent(npgString, k -> new NpgRow(k)).getMessageList().add(messageRow.getRow());
             });

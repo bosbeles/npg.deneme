@@ -1,33 +1,45 @@
 package npg.panel;
 
 import npg.model.*;
+import npg.old.NpgPanel;
 import npg.test.GUITester;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.TableModelListener;
 import java.awt.*;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class NpgPanel3 extends JPanel {
+import static npg.panel.GUIUtil.*;
+
+public class NpgPanel3 extends JPanel implements NpgDefinition.NpgDefinitionListener {
     private final NpgDefinition definitionPanel;
     private JTable npgTable;
     private JTable selectedNpgTable;
+    private LabelSublabelTableModel labelSublabelModel;
+    private NpgRowWithFilterTableModel selectedNpgTableModel;
+
+    public NpgPanel3() {
+        this(new NpgDefinition());
+    }
 
     /**
      * Create the panel.
      */
-    public NpgPanel3() {
-        definitionPanel = new NpgDefinition();
+    public NpgPanel3(NpgDefinition definitionPanel) {
+        this.definitionPanel = definitionPanel;
+        this.definitionPanel.addDefinitionListener(this);
 
         int y = 0;
 
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[]{0, 0, 0, 20, 0};
-        gridBagLayout.rowHeights = new int[]{0, 0, 300, 0};
-        gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-        gridBagLayout.rowWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
+        gridBagLayout.columnWidths = new int[]{0, 0};
+        gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
+        gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.50, 0.75, Double.MIN_VALUE};
         setLayout(gridBagLayout);
 
 
@@ -41,21 +53,48 @@ public class NpgPanel3 extends JPanel {
         viewPanel.add(npgViewButton);
         viewPanel.add(labelSublabelViewButton);
 
+
         GridBagConstraints gbc = new GridBagConstraints();
 
         gbc.gridx = 0;
-        gbc.gridwidth = 4;
+        gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridy = y;
         add(viewPanel, gbc);
 
-        JScrollPane npgScroll = new JScrollPane();
+
+        GridBagLayout messageGroupPanelLayout = new GridBagLayout();
+        messageGroupPanelLayout.columnWidths = new int[]{0, 0, 0, 20, 0};
+        messageGroupPanelLayout.rowHeights = new int[]{0, 0};
+        messageGroupPanelLayout.columnWeights = new double[]{1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+        messageGroupPanelLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+
+        JPanel messageGroupPanel = new JPanel(messageGroupPanelLayout);
+        messageGroupPanel.setPreferredSize(new Dimension(700, 300));
+        messageGroupPanel.setBorder(new TitledBorder("Mesaj Grubuna Göre Filtreleme"));
+
+
+
+        GridBagConstraints gbc_messageGroupPanel = new GridBagConstraints();
+        gbc_messageGroupPanel.insets = new Insets(0, 0, 5, 0);
+        gbc_messageGroupPanel.fill = GridBagConstraints.BOTH;
+        gbc_messageGroupPanel.gridx = 0;
+        gbc_messageGroupPanel.gridy = ++y;
+        gbc_messageGroupPanel.gridwidth = 2;
+        add(messageGroupPanel, gbc_messageGroupPanel);
+
+
         GridBagConstraints gbc_npgScroll = new GridBagConstraints();
-        gbc_npgScroll.insets = new Insets(0, 0, 5, 5);
+        gbc_npgScroll.insets = new Insets(5, 5, 5, 5);
         gbc_npgScroll.fill = GridBagConstraints.BOTH;
         gbc_npgScroll.gridx = 0;
-        gbc_npgScroll.gridy = ++y;
-        add(npgScroll, gbc_npgScroll);
+        gbc_npgScroll.gridy = 0;
+
+
+        JScrollPane npgScroll = new JScrollPane();
+
+
+        messageGroupPanel.add(npgScroll, gbc_npgScroll);
 
         npgTable = new JTable();
 
@@ -68,8 +107,8 @@ public class NpgPanel3 extends JPanel {
         GridBagConstraints gbc_buttonPanel = new GridBagConstraints();
         gbc_buttonPanel.insets = new Insets(0, 0, 5, 5);
         gbc_buttonPanel.gridx = 1;
-        gbc_buttonPanel.gridy = y;
-        add(buttonPanel, gbc_buttonPanel);
+        gbc_buttonPanel.gridy = 0;
+        messageGroupPanel.add(buttonPanel, gbc_buttonPanel);
         buttonPanel.setLayout(new GridLayout(0, 1, 0, 0));
 
         JButton rightButton = new JButton(getIcon("right.png"));
@@ -89,13 +128,13 @@ public class NpgPanel3 extends JPanel {
         gbc_selectedNpgScroll.insets = new Insets(0, 0, 5, 5);
         gbc_selectedNpgScroll.fill = GridBagConstraints.BOTH;
         gbc_selectedNpgScroll.gridx = 2;
-        gbc_selectedNpgScroll.gridy = y;
-        add(selectedNpgScroll, gbc_selectedNpgScroll);
+        gbc_selectedNpgScroll.gridy = 0;
+        messageGroupPanel.add(selectedNpgScroll, gbc_selectedNpgScroll);
 
         selectedNpgTable = new JTable();
         ((JComponent) selectedNpgTable.getDefaultRenderer(Boolean.class)).setOpaque(true);
         selectedNpgTable.setRowHeight(26);
-        NpgRowWithFilterTableModel selectedNpgTableModel = new NpgRowWithFilterTableModel();
+        selectedNpgTableModel = new NpgRowWithFilterTableModel();
         selectedNpgTable.setModel(selectedNpgTableModel);
         selectedNpgTable.setFillsViewportHeight(true);
         selectedNpgScroll.setViewportView(selectedNpgTable);
@@ -104,8 +143,8 @@ public class NpgPanel3 extends JPanel {
         GridBagConstraints gbc_panel = new GridBagConstraints();
         gbc_panel.insets = new Insets(0, 0, 5, 0);
         gbc_panel.gridx = 3;
-        gbc_panel.gridy = y;
-        add(panel, gbc_panel);
+        gbc_panel.gridy = 0;
+        messageGroupPanel.add(panel, gbc_panel);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         JButton upButton = new JButton(getIcon("up.png"));
@@ -122,7 +161,7 @@ public class NpgPanel3 extends JPanel {
         LabelSublabelPanel labelSublabelPanel = new LabelSublabelPanel();
 
 
-        LabelSublabelTableModel labelSublabelModel = (LabelSublabelTableModel) labelSublabelPanel.getTable().getModel();
+        labelSublabelModel = (LabelSublabelTableModel) labelSublabelPanel.getTable().getModel();
 
         List<MessageRow> messageRowList = definitionPanel.getMessageRowList();
         labelSublabelModel.setData(messageRowList);
@@ -130,14 +169,25 @@ public class NpgPanel3 extends JPanel {
         GridBagConstraints gbc_labelSublabel = new GridBagConstraints();
         gbc_labelSublabel.gridx = 0;
         gbc_labelSublabel.gridy = ++y;
-        gbc_labelSublabel.gridwidth = 3;
+        gbc_labelSublabel.gridwidth = 1;
         gbc_labelSublabel.weightx = 1.0;
         gbc_labelSublabel.fill = GridBagConstraints.BOTH;
 
 
         add(labelSublabelPanel, gbc_labelSublabel);
 
-        selectedNpgTableModel.addTableModelListener(e -> {
+        FilterOverridenPanel filterOverridenPanel = new FilterOverridenPanel();
+        GridBagConstraints gbc_filterOverridenPanel = new GridBagConstraints();
+        gbc_filterOverridenPanel.gridx = 1;
+        gbc_filterOverridenPanel.gridy = y;
+        gbc_filterOverridenPanel.gridwidth = 1;
+        gbc_filterOverridenPanel.weightx = 1.0;
+        gbc_filterOverridenPanel.fill = GridBagConstraints.BOTH;
+
+        add(filterOverridenPanel, gbc_filterOverridenPanel);
+
+
+        TableModelListener selectedNpgTableModelListener = e -> {
             int rowCount = selectedNpgTableModel.getRowCount();
             if (rowCount > 0) {
                 NpgRow firstRow = (NpgRow) selectedNpgTable.getValueAt(0, -1);
@@ -154,7 +204,8 @@ public class NpgPanel3 extends JPanel {
                     }
                 }
             }
-        });
+        };
+        selectedNpgTableModel.addTableModelListener(selectedNpgTableModelListener);
 
         rightButton.addActionListener(e -> transfer(npgTable, selectedNpgTable));
         leftButton.addActionListener(e -> transfer(selectedNpgTable, npgTable));
@@ -177,11 +228,17 @@ public class NpgPanel3 extends JPanel {
             boolean flag = npgViewButton.isSelected();
             labelSublabelPanel.activate(!flag);
 
-            GUIUtil.enableComponents(panel, flag);
-            GUIUtil.enableComponents(buttonPanel, flag);
+            enableComponents(panel, flag);
+            enableComponents(buttonPanel, flag);
             selectedNpgTableModel.setEditable(flag);
             selectedNpgTable.setEnabled(flag);
             npgTable.setEnabled(flag);
+
+            messageGroupPanel.setEnabled(flag);
+            if(flag) {
+                selectedNpgTableModelListener.tableChanged(null);
+            }
+
 
         };
         npgViewButton.setSelected(true);
@@ -254,9 +311,12 @@ public class NpgPanel3 extends JPanel {
         }
     }
 
-    private ImageIcon getIcon(String path) {
-        return new ImageIcon(getClass().getClassLoader().getResource(path));
+
+    @Override
+    public void definitionChanged() {
+        List<MessageRow> messageRowList = definitionPanel.getMessageRowList();
+        labelSublabelModel.setData(messageRowList);
+        npgTable.setModel(new NpgRowTableModel(definitionPanel.getNpgRowList()));
+        selectedNpgTableModel.setData(new ArrayList<>());
     }
-
-
 }

@@ -25,8 +25,10 @@ public class NpgDefinitionTableModel extends DefaultTableModel {
         }
 
     };
+    private final List<MessageRow> rowList;
 
     public NpgDefinitionTableModel(List<MessageRow> rowList) {
+        this.rowList = rowList;
         Object[][] dataVector = new Object[rowList.size()][2];
         for (int i = 0; i < dataVector.length; i++) {
             MessageRow messageRow = rowList.get(i);
@@ -63,8 +65,9 @@ public class NpgDefinitionTableModel extends DefaultTableModel {
 
             npgs.sort(COMPARATOR);
 
-            String ngpString = npgs.stream().collect(Collectors.joining(" "));
-            super.setValueAt(ngpString, row, column);
+            // String ngpString = npgs.stream().collect(Collectors.joining(" "));
+            rowList.get(row).setNpgList(npgs);
+            super.setValueAt(npgs, row, column);
 
         } else {
             super.setValueAt(aValue, row, column);

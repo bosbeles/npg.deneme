@@ -1,5 +1,6 @@
 package npg.old;
 
+import npg.panel.NpgPanel3;
 import npg.test.GUITester;
 
 import javax.swing.*;
@@ -13,6 +14,8 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import static npg.panel.GUIUtil.getIcon;
+
 public class NpgPanel extends JPanel implements PanelListener {
     private JTable table;
 
@@ -20,7 +23,6 @@ public class NpgPanel extends JPanel implements PanelListener {
 
     private JDialog dialog;
 
-    private NpgPanel2 npgPanel2;
 
     /**
      * Create the panel.
@@ -29,7 +31,7 @@ public class NpgPanel extends JPanel implements PanelListener {
         npgDefPanel = new NpgDefinition();
         npgDefPanel.addPanelListener(this);
 
-        npgPanel2 = new NpgPanel2(npgDefPanel);
+
 
         JPanel npgPanel1 = new JPanel();
 
@@ -110,20 +112,20 @@ public class NpgPanel extends JPanel implements PanelListener {
         panel.add(leftPanel, gbc_leftPanel);
         leftPanel.setLayout(new GridLayout(0, 1, 0, 0));
 
-        JButton npgToLeft = new JButton("<");
+        JButton npgToLeft = new JButton(getIcon("left.png"));
 
         npgToLeft.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(npgToLeft);
 
-        JButton leftToNpg = new JButton(">");
+        JButton leftToNpg = new JButton(getIcon("right.png"));
         leftToNpg.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(leftToNpg);
 
-        JButton npgToLeftAll = new JButton("<<");
+        JButton npgToLeftAll = new JButton(getIcon("left-double.png"));
         npgToLeftAll.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(npgToLeftAll);
 
-        JButton leftToNpgAll = new JButton(">>");
+        JButton leftToNpgAll = new JButton(getIcon("right-double.png"));
         leftToNpgAll.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(leftToNpgAll);
 
@@ -144,19 +146,19 @@ public class NpgPanel extends JPanel implements PanelListener {
         panel.add(rightPanel, gbc_rightPanel);
         rightPanel.setLayout(new GridLayout(0, 1, 0, 0));
 
-        JButton npgToRight = new JButton(">");
+        JButton npgToRight = new JButton(getIcon("right.png"));
         npgToRight.setAlignmentX(0.5f);
         rightPanel.add(npgToRight);
 
-        JButton rightToNpg = new JButton("<");
+        JButton rightToNpg = new JButton(getIcon("left.png"));
         rightToNpg.setAlignmentX(0.5f);
         rightPanel.add(rightToNpg);
 
-        JButton npgToRightAll = new JButton(">>");
+        JButton npgToRightAll = new JButton(getIcon("right-double.png"));
         npgToRightAll.setAlignmentX(0.5f);
         rightPanel.add(npgToRightAll);
 
-        JButton rightToNpgAll = new JButton("<<");
+        JButton rightToNpgAll = new JButton(getIcon("left-double.png"));
         rightToNpgAll.setAlignmentX(0.5f);
         rightPanel.add(rightToNpgAll);
 
@@ -459,18 +461,22 @@ public class NpgPanel extends JPanel implements PanelListener {
             }
         });
 
+        npg.panel.NpgDefinition npgDefinition = new npg.panel.NpgDefinition();
+        NpgPanel2 npgPanel2 = new NpgPanel2(npgDefinition);
+
         JTabbedPane tabbedPane = new JTabbedPane();
+
+        tabbedPane.addTab("0", npgDefinition);
         tabbedPane.addTab("1", npgPanel1);
         tabbedPane.addTab("2", npgPanel2);
+        tabbedPane.addTab("3", new NpgPanel3(npgDefinition));
+
         setLayout(new BorderLayout());
         add(tabbedPane);
 
     }
 
-    public static void main(String[] args) {
-        GUITester.test(() -> new NpgPanel(), args.length > 0 ? args[0] : "Nimbus");
 
-    }
 
     @Override
     public void updateNpgColumn() {
@@ -532,6 +538,11 @@ public class NpgPanel extends JPanel implements PanelListener {
 
     private void transferAll(JList<Integer> from, JList<Integer> to) {
         transfer(((SortedListModel) from.getModel()).getAll(), from, to);
+    }
+
+    public static void main(String[] args) {
+        GUITester.test(() -> new NpgPanel(), args.length > 0 ? args[0] : "Nimbus");
+
     }
 
 }

@@ -1,5 +1,6 @@
 package npg.panel;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class GUIUtil {
@@ -12,5 +13,10 @@ public class GUIUtil {
                 enableComponents((Container) component, enable);
             }
         }
+    }
+
+
+    public static ImageIcon getIcon(String path) {
+        return new ImageIcon(GUIUtil.class.getClassLoader().getResource(path));
     }
 }

@@ -89,5 +89,8 @@ public class NpgRow implements Comparable<NpgRow> {
 
     }
 
-
+    @Override
+    public String toString() {
+        return npg + ": " + messageList;
+    }
 }
