@@ -2,8 +2,10 @@ package npg.test;
 
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class GUITester {
@@ -17,11 +19,19 @@ public class GUITester {
     }
 
     public static void test(Supplier<JComponent> panelSupplier, String lookAndFeel) {
-        setLookAndFeel(lookAndFeel);
+        test(panelSupplier, lookAndFeel, f->{});
+    }
 
-        JFrame frame = new JFrame();
+    public static void test(Supplier<JComponent> panelSupplier, String lookAndFeel, Consumer<JFrame> frameConsumer) {
+        EventQueue.invokeLater(()-> testPrivate(panelSupplier, lookAndFeel, frameConsumer));
 
-        JMenu menu = new JMenu("Look and Feel");
+
+    }
+
+    private static void testPrivate(Supplier<JComponent> panelSupplier, String lookAndFeel, Consumer<JFrame> frameConsumer) {
+
+
+
         // Get all the available look and feel that we are going to use for
         // creating the JMenuItem and assign the action listener to handle
         // the selection of menu item to change the look and feel.
@@ -71,13 +81,19 @@ public class GUITester {
             }
         }
 
+        setLookAndFeel(lookAndFeel);
+
+        JFrame frame = new JFrame();
+
+        JMenu menu = new JMenu("Look and Feel");
+
         LookAndFeelInfo[] lookAndFeels = UIManager.getInstalledLookAndFeels();
         for (LookAndFeelInfo lookAndFeelInfo : lookAndFeels) {
             JMenuItem item = new JMenuItem(lookAndFeelInfo.getName());
             item.addActionListener(event -> {
                 try {
                     frame.dispose();
-                    test(panelSupplier, lookAndFeelInfo.getName());
+                    test(panelSupplier, lookAndFeelInfo.getName(), frameConsumer);
                     // Set the look and feel for the frame and update the UI
                     // to use a new selected look and feel.
 
@@ -104,6 +120,9 @@ public class GUITester {
         frame.setContentPane(panelSupplier.get());
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        frameConsumer.accept(frame);
 
         frame.pack();
         frame.setLocationRelativeTo(null);

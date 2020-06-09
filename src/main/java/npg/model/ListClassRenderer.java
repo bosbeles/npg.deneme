@@ -20,7 +20,9 @@ public class ListClassRenderer extends SubstanceDefaultTableCellRenderer {
             List<Object> list = (List) value;
 
             String representation = list.stream().map(e -> e.toString()).sorted(NpgDefinitionTableModel.COMPARATOR).collect(Collectors.joining(" "));
-            return super.getTableCellRendererComponent(table, representation, isSelected, hasFocus, row, column);
+            JComponent component = (JComponent) super.getTableCellRendererComponent(table, representation, isSelected, hasFocus, row, column);
+            // component.setToolTipText(representation);
+            return component;
         }
         return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
     }

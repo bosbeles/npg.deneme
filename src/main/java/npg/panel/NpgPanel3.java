@@ -95,10 +95,8 @@ public class NpgPanel3 extends JPanel implements NpgDefinition.NpgDefinitionList
 
         messageGroupPanel.add(npgScroll, gbc_npgScroll);
 
-        npgTable = new JTable();
+        npgTable = new GenericTable(1);
 
-        npgTable.setRowHeight(26);
-        npgTable.setFillsViewportHeight(true);
         npgTable.setModel(new NpgRowTableModel(definitionPanel.getNpgRowList()));
         npgScroll.setViewportView(npgTable);
 
@@ -130,12 +128,13 @@ public class NpgPanel3 extends JPanel implements NpgDefinition.NpgDefinitionList
         gbc_selectedNpgScroll.gridy = 0;
         messageGroupPanel.add(selectedNpgScroll, gbc_selectedNpgScroll);
 
-        selectedNpgTable = new JTable();
-        ((JComponent) selectedNpgTable.getDefaultRenderer(Boolean.class)).setOpaque(true);
-        selectedNpgTable.setRowHeight(26);
+        selectedNpgTable = new GenericTable(1);
+        RadioButtonCellEditorRenderer editorRenderer = new RadioButtonCellEditorRenderer();
+        selectedNpgTable.setDefaultEditor(Boolean.class, editorRenderer);
+        selectedNpgTable.setDefaultRenderer(Boolean.class, new RadioButtonCellEditorRenderer());
+
         selectedNpgTableModel = new NpgRowWithFilterTableModel();
         selectedNpgTable.setModel(selectedNpgTableModel);
-        selectedNpgTable.setFillsViewportHeight(true);
         selectedNpgScroll.setViewportView(selectedNpgTable);
 
         JPanel panel = new JPanel();
